@@ -9,6 +9,9 @@ const {
 } = require("discord.js");
 
 const { clientReadyHandler } = require("./events/clientReady");
+const {
+  interactionCreateHandler,
+} = require("./events/interactionCreateHandler");
 
 const pingCommand = require("./commands/ping");
 
@@ -27,7 +30,10 @@ client.commands = new Collection();
 
 client.commands.set(pingCommand.data.name, pingCommand);
 
-client.on(Events.ClientReady, clientReadyHandler);
+// client ready should be emitted only once.
+client.once(Events.ClientReady, clientReadyHandler);
+
+client.on(Events.InteractionCreate, interactionCreateHandler);
 
 // Login to Discord
 client.login(process.env.DISCORD_TOKEN);
