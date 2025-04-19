@@ -1,5 +1,7 @@
 require("dotenv").config();
-const { Client, Events, GatewayIntentBits } = require("discord.js");
+
+const { Client, Events, GatewayIntentBits, REST } = require("discord.js");
+const { clientReadyHandler } = require("./events/clientReady");
 
 // Note: Everything that happens on discord is an event
 
@@ -12,9 +14,7 @@ const client = new Client({
   ],
 });
 
-client.on(Events.ClientReady, () => {
-  console.log("Logged in!!!");
-});
+client.on(Events.ClientReady, clientReadyHandler);
 
 // Login to Discord
 client.login(process.env.DISCORD_TOKEN);
